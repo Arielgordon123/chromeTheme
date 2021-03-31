@@ -79,3 +79,24 @@ chrome.devtools.panels.elements.createSidebarPane(
         chrome.devtools.panels.elements.onSelectionChanged.addListener(
             updateElementProperties);
     });
+const findVueComponent = () => {
+    let el = $0;
+    const data = {}
+    for (const key in el) {
+        if (key.startsWith('__vue')) {
+            const fiberNode = el[key];
+            return fiberNode;
+        }
+    }
+};
+
+chrome.devtools.panels.elements.createSidebarPane(
+    "Vue",
+    function(sidebar) {
+        function updateElementProperties() {
+            sidebar.setExpression("(" + findVueComponent.toString() + ")()");
+        }
+        updateElementProperties();
+        chrome.devtools.panels.elements.onSelectionChanged.addListener(
+            updateElementProperties);
+    });
