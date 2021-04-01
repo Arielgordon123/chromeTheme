@@ -58,7 +58,7 @@ const findReactComponent = () => {
     for (const key in el) {
         if (key.startsWith('__reactInternalInstance$') || key.startsWith('__reactFiber$')) {
             const fiberNode = el[key];
-            data.Instance = { fiberNode, 'fiberNode.return': {...fiberNode.return }, 'stateNode': {...fiberNode.return.stateNode } };
+            data.Instance = { fiberNode, 'fiberNode.return': {...fiberNode?.return }, 'stateNode': {...fiberNode.return?.stateNode } };
         }
         if (key.startsWith('__reactEventHandlers$') || key.startsWith('__reactProps$')) {
             const fiberNode = el[key];
@@ -79,6 +79,7 @@ chrome.devtools.panels.elements.createSidebarPane(
         chrome.devtools.panels.elements.onSelectionChanged.addListener(
             updateElementProperties);
     });
+
 const findVueComponent = () => {
     let el = $0;
     const data = {}
@@ -100,3 +101,16 @@ chrome.devtools.panels.elements.createSidebarPane(
         chrome.devtools.panels.elements.onSelectionChanged.addListener(
             updateElementProperties);
     });
+
+// const findAngularComponent = () => {return angular?.element($0).scope()}
+
+// chrome.devtools.panels.elements.createSidebarPane(
+//     "angular",
+//     function(sidebar) {
+//         function updateElementProperties() {
+//             sidebar.setExpression("(" + findAngularComponent.toString() + ")()");
+//         }
+//         updateElementProperties();
+//         chrome.devtools.panels.elements.onSelectionChanged.addListener(
+//             updateElementProperties);
+//     });
